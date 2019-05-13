@@ -15,20 +15,20 @@ class Board extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            squares: Array(9).fill(null),
+            squares: Array(9).fill('*'),
             playerMove: 'X'
         }
     }
 
     handleClick(i){
         const squares = this.state.squares.slice();
-        if(squares[i] != null)
+        if(squares[i] !== '*' || calculateWinner(squares))
         {
             return
         }
         squares[i] = this.state.playerMove;
         this.setState({squares: squares});
-        if(this.state.playerMove == 'X')
+        if(this.state.playerMove === 'X')
         {
             this.setState({playerMove: 'O'})
         }
@@ -112,7 +112,7 @@ function calculateWinner(squares) {
     ];
     for(let i=0; i<lines.length;i++){
         const [a,b,c] = lines[i];
-        if(squares[a] &&
+        if(squares[a] !== '*' &&
             squares[a] === squares[b] &&
             squares[a] === squares[c]
         ){return squares[a];}
